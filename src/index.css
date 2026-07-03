@@ -1,0 +1,281 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Outfit:wght@100..900&display=swap');
+
+/* Design Tokens */
+:root {
+  --font-title: 'Fredoka', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  
+  --transition-speed: 0.5s;
+  
+  /* Shared standard sizes */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+
+/* Warm Cozy Day Theme CSS Variables */
+.theme-day {
+  --bg-main: linear-gradient(135deg, #faf6f0 0%, #fef3c7 50%, #fae8ff 100%);
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --primary: #8b5cf6;
+  --primary-glow: rgba(139, 92, 246, 0.25);
+  --shadow-cozy: 0 8px 0px #e2e8f0, 0 16px 20px rgba(0,0,0,0.05);
+  --shadow-hover: 0 4px 0px #cbd5e1, 0 8px 12px rgba(0,0,0,0.08);
+  --accent-star: #fbbf24;
+  --accent-rainbow: linear-gradient(90deg, #f87171, #fb923c, #facc15, #4ade80, #60a5fa, #c084fc);
+  --weather-tint: rgba(255, 255, 255, 0);
+  --glass-tint: rgba(255, 255, 255, 0.4);
+}
+
+/* Magical Celestial Night Theme CSS Variables */
+.theme-night {
+  --bg-main: linear-gradient(135deg, #090816 0%, #0d0b21 40%, #1a103c 100%);
+  --bg-card: rgba(21, 19, 46, 0.65);
+  --bg-card-hover: rgba(29, 26, 64, 0.8);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: rgba(99, 102, 241, 0.3);
+  --primary: #a855f7;
+  --primary-glow: rgba(168, 85, 247, 0.6);
+  --shadow-cozy: 0 0 15px rgba(168, 85, 247, 0.2), inset 0 0 15px rgba(99, 102, 241, 0.1);
+  --shadow-hover: 0 0 25px rgba(168, 85, 247, 0.4), inset 0 0 20px rgba(99, 102, 241, 0.2);
+  --accent-star: #fde047;
+  --accent-rainbow: linear-gradient(90deg, #c084fc, #818cf8, #38bdf8, #818cf8, #c084fc);
+  --weather-tint: rgba(13, 11, 33, 0.4);
+  --glass-tint: rgba(15, 23, 42, 0.5);
+}
+
+/* Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: background-color var(--transition-speed) ease, 
+              border-color var(--transition-speed) ease, 
+              color 0.2s ease, 
+              box-shadow 0.3s ease;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-main);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 600;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Animation Keyframes */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes float-star {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-10px) scale(1.05); }
+  100% { transform: translateY(0px) scale(1); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes fall {
+  0% { transform: translateY(-20px); opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.floating-star {
+  animation: float-star 3s ease-in-out infinite;
+}
+
+.floating-island {
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-island-offset-1 {
+  animation: float 7s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.floating-island-offset-2 {
+  animation: float 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Star Galaxy Background Elements */
+.starry-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 4s infinite ease-in-out;
+}
+
+/* Cozy Glass Cards */
+.cozy-card {
+  background: var(--bg-card);
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-cozy);
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s ease;
+}
+
+.cozy-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Cozy Input */
+.cozy-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 3px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: var(--glass-tint);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  outline: none;
+  font-size: 1rem;
+}
+
+.cozy-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+/* Cozy Buttons */
+.cozy-btn {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  padding: 10px 24px;
+  border: 3px fill var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.cozy-btn-primary {
+  background: var(--primary);
+  color: white;
+  border: 3px solid transparent;
+  box-shadow: 0 4px 0px rgba(0,0,0,0.15);
+}
+
+.cozy-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0px rgba(0,0,0,0.15), 0 0 10px var(--primary-glow);
+}
+
+.cozy-btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 0px rgba(0,0,0,0.15);
+}
+
+.cozy-btn-secondary {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border: 3px solid var(--border-color);
+  box-shadow: 0 4px 0px var(--border-color);
+}
+
+.cozy-btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0px var(--border-color);
+}
+
+/* Weather Overlays */
+.weather-rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.rain-drop {
+  position: absolute;
+  background: linear-gradient(transparent, rgba(168, 85, 247, 0.4));
+  width: 1.5px;
+  height: 40px;
+  opacity: 0.7;
+  animation: fall 1.2s linear infinite;
+}
+
+/* Aurora background */
+.aurora-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.1) 0%, transparent 40%),
+              radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+  animation: float 20s infinite ease-in-out;
+}
+
+/* Habit Chain glowing pipe connector */
+.stack-connector {
+  width: 6px;
+  background: var(--primary);
+  box-shadow: 0 0 8px var(--primary-glow);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.glow-glow {
+  animation: twinkle 3s infinite ease-in-out;
+}
