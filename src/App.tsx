@@ -236,9 +236,26 @@ const AppContent: React.FC = () => {
             height: 'calc(100vh - 78px)',
             position: 'relative',
             zIndex: 2,
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
-          {renderActiveScreen()}
+          <div style={{ flex: 1 }}>
+            {renderActiveScreen()}
+          </div>
+          <footer
+            style={{
+              marginTop: '40px',
+              paddingTop: '20px',
+              borderTop: '2px dashed var(--border-color)',
+              textAlign: 'center',
+              fontSize: '0.85rem',
+              color: 'var(--text-muted)',
+              fontFamily: 'var(--font-body)',
+            }}
+          >
+            Developed by <span style={{ fontWeight: 'bold', color: 'var(--primary)' }}>Mohanapriya Kumar</span>
+          </footer>
         </main>
       </div>
 
